@@ -15,9 +15,9 @@
                 {
                     marker.Marked = true;
 
-                    var hasawinner = playfield.BingoBoards.Where(x => x.HasBingo).FirstOrDefault();
+                    var hasawinner = playfield.BingoBoards.Where(x => x.WinRank == null && x.HasBingo).FirstOrDefault();
 
-                    if (hasawinner != null && hasawinner.WinRank == null)
+                    if (hasawinner != null)
                     {
                         hasawinner.WinRank = winRank;
                         hasawinner.WinningNumber = number;
@@ -29,7 +29,7 @@
                 }
             }
 
-            foreach(var winningBoard in winningBoards)
+            foreach (var winningBoard in winningBoards)
             {
                 Console.WriteLine($"Winning board at {winningBoard.WinningValue} at {winningBoard.WinRank} board number {winningBoard.BoardNumber}");
             }
@@ -93,24 +93,23 @@
 
                     for (int i = 0; i < BingoLines.Count; i++)
                     {
-                        var hasVerticalBingo = false;
+                        var countVerticalMarks = 0;
 
                         for (int j = 0; j < BingoLines[i].Markers.Count; j++)
                         {
                             if (BingoLines[j].Markers[i].Marked)
                             {
-                                hasVerticalBingo = true;
+                                countVerticalMarks++;
 
-                                if (j == BingoLines[i].Markers.Count - 1)
+                                if (countVerticalMarks == 5)
                                 {
-                                    return hasVerticalBingo;
+                                    return true;
                                 }
 
                                 continue;
                             }
                             else
                             {
-                                hasVerticalBingo = false;
                                 break;
                             }
                         }
@@ -144,11 +143,11 @@
             47,87,73,44,71,55,80
         };
 
-        private static readonly string testBoard = @"12 79 33 36 97
-82 38 77 61 84
-55 74 21 65 39
-54 56 95 50  2
-45 68 31 94 14
+        private static readonly string testBoard = @"12 18 33 36 97
+82 99 77 61 84
+55 39 21 65 39
+54 89 95 50  2
+45  0 31 94 14
 
 95 26 80 25 62
 79 91 70 76 61

@@ -96,6 +96,59 @@
                             }
                         }
                     }
+                    else
+                    {
+                        // Move diagonally
+                        var delta = Math.Abs(coordinate.X1 - coordinate.X2) + 1;
+                        // 8,0 0,8 = 8,0 - 7,1 - 6,2 - 5,3 - 4,4 - 3,5 - 2,6 - 1,7 - 0,8
+                        if (coordinate.X1 < coordinate.X2 && coordinate.Y1 > coordinate.Y2)
+                        {
+                            for (int i = 0; i < delta; i++)
+                            {
+                                Coordinates.Add(new Coordinate
+                                {
+                                    X = coordinate.X2 - i,
+                                    Y = coordinate.Y2 + i
+                                });
+
+                            }
+                        }
+                        else if (coordinate.X1 > coordinate.X2 && coordinate.Y1 < coordinate.Y2)
+                        {
+                            for (int i = 0; i < delta; i++)
+                            {
+                                Coordinates.Add(new Coordinate
+                                {
+                                    X = coordinate.X1 - i,
+                                    Y = coordinate.Y1 + i
+                                });
+                            }
+                        }
+                        else if (coordinate.X1 > coordinate.X2 && coordinate.Y1 > coordinate.Y2)
+                        {
+                            // 6,4 2,0 - 6,4 - 5,3 - 4,2 - 3,1 - 2,0 
+                            for(int i = 0; i < delta; i++)
+                            {
+                                Coordinates.Add(new Coordinate
+                                {
+                                    X = coordinate.X1 - i,
+                                    Y = coordinate.Y1 - i
+                                });
+                            }
+                        }
+                        else if (coordinate.X1 < coordinate.X2 && coordinate.Y1 < coordinate.Y2)
+                        {
+                            // 0,0 8,8 - 0,0 - 1,1 - 2,2 - 3,3 - 4,4 - 5,5 - 6,6 - 7,7 - 8,8
+                            for (int i = 0; i < delta; i++)
+                            {
+                                Coordinates.Add(new Coordinate
+                                {
+                                    X = coordinate.X1 + i,
+                                    Y = coordinate.Y1 + i
+                                });
+                            }
+                        }
+                    }
                 }
             }
 
@@ -122,6 +175,17 @@
             public int X { get; set; }
             public int Y { get; set; }
         }
+
+        private static readonly string testInput = @"0,9 -> 5,9
+8,0 -> 0,8
+9,4 -> 3,4
+2,2 -> 2,1
+7,0 -> 7,4
+6,4 -> 2,0
+0,9 -> 2,9
+3,4 -> 1,4
+0,0 -> 8,8
+5,5 -> 8,2";
 
         private static readonly string coordinateInput = @"989,854 -> 521,854
 831,695 -> 402,266

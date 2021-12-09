@@ -12,4 +12,6 @@
 
 //Day6.RunDay6();
 
-Day7.RunDay7();
+//Day7.RunDay7();
+
+Day8.RunDay8();

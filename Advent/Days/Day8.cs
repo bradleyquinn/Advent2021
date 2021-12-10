@@ -5,7 +5,7 @@
         public static void RunDay8()
         {
             var currentDisplays = new CurrentDisplay();
-            var input = new TestInput(puzzleInput);
+            var input = new TestInput(testInput);
             var totalCountOf1478 = 0;
 
             foreach (var sequence in input.SignalInputs)
@@ -16,17 +16,26 @@
                 {
                     var matcher = currentDisplays.SevenSegmentDisplays.SelectMany(x => x.SevenSegmentOptions.Where(y => y.NumberOfSegments == signalPattern.Length).ToList()).ToList();
 
-                    if (matcher != null && matcher.Count == 1)
+                    if (matcher != null && matcher.Any())
                     {
-                        // We know for sure the alternative segments 
-                        foreach (var signal in signalPattern)
+                        switch (matcher.Count)
                         {
-                            matcher.First()?.AlternativeSegments.Add(signal.ToString());
+                            case 5:
+                                // 2 3 or 5
+                                break;
+                            case 6:
+                                // 0 6 or 9
+                                break;
+                            case 1:
+                                // Everything else with single display
+                                // We know for sure the alternative segments 
+                                foreach (var signal in signalPattern)
+                                {
+                                    matcher.First()?.AlternativeSegments.Add(signal.ToString());
+                                }
+                                break;
+
                         }
-                    }
-                    else
-                    {
-                        // Too many matches bro
                     }
                 }
 
